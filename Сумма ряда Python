@@ -2,7 +2,7 @@
 n_max = int(input('Введите натуральное число: '))
 sum=0
 q=1
-for n in ranghe(1, n_max + 1):
+for n in range(1, n_max + 1):
   q = float( ((-1) ** n)/(2**n) )
   sum += q
 print('Сумма ряда ', sum)
