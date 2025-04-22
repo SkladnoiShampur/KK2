@@ -1,0 +1,18 @@
+#include <iostream>
+#include <cmath>
+
+int main() {
+    // Сумма числового ряда
+    int maxNumber;
+    std::cout << "Введите натуральное число: ";
+    std::cin >> maxNumber;
+
+    double totalSum = 0;
+    for (int n = 1; n <= maxNumber; ++n) {
+        double term = static_cast<double>(std::pow(-1, n)) / std::pow(2, n);
+        totalSum += term;
+    }
+
+    std::cout << "Сумма ряда " << totalSum << std::endl;
+    return 0;
+}
