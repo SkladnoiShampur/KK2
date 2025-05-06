@@ -1,0 +1,11 @@
+import math
+
+def main():
+    n_max = 10
+    sum_value = 0.0
+    for i in range(3, n_max + 1):
+        sum_value += (1.0 / (i * i - 4))
+    print("Summa:", sum_value)
+
+if __name__ == "__main__":
+    main()
