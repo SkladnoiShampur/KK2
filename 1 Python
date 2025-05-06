@@ -1,0 +1,17 @@
+import math
+
+def func(threshold=1e-6):
+    cumulative_product = 1.0
+    index = 1
+    term = 1.0
+    while abs(term) > threshold:
+        term = 1 - 1.0 / (math.pow(index, 2))
+        cumulative_product *= term
+        index += 1
+    return cumulative_product
+
+
+result = func()
+print("Произведение ряда:", result)
+if result == 0:
+  print("Ряд раходится")
