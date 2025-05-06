@@ -1,0 +1,28 @@
+import math
+
+def calculate_series(x, max_iterations, tolerance):
+    sum_of_terms = 0.0
+    term = 0.0
+    n = 1
+    while abs(term) > tolerance and n <= max_iterations:
+        term = x / (1.0 + math.pow(n, 4.0) * math.pow(x, 3.0))
+        sum_of_terms += term
+        n += 1
+
+    if n > max_iterations:
+        print("Достигнуто максимальное число итераций.")
+
+    return sum_of_terms
+
+def main():
+    x = 1
+    max_iterations = 10
+    tolerance = 2.7 * (10 ** -6)
+
+    result = calculate_series(x, max_iterations, tolerance)
+
+    print(f"{result:.10f}")
+    print(f"Значение функционального ряда при x = {x} равно: {result}")
+
+if __name__ == "__main__":
+    main()
