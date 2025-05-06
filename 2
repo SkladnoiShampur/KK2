@@ -4,47 +4,31 @@
 
 using namespace std;
 
-// Функция для вычисления значения функционального ряда
 double calculateSeries(double x, int maxIterations, double tolerance) {
     double sum = 0.0;
     double term;
     int n = 1;
-
     do {
         term = x / (1.0 + pow(n, 4.0) * pow(x, 3.0));
         sum += term;
         n++;
-    } while (abs(term) > tolerance && n <= maxIterations);  // Условие остановки: абсолютная величина члена ряда < погрешности или достигнуто максимальное число итераций
+    } while (abs(term) > tolerance && n <= maxIterations);  
 
     if (n > maxIterations) {
-        cout << "Предупреждение: Ряд, возможно, расходится или сходится слишком медленно.  Достигнуто максимальное число итераций." << endl;
+        cout << "Достигнуто максимальное число итераций." << endl;
     }
 
     return sum;
 }
 
 int main() {
-    double x;
-    int maxIterations;
-    double tolerance;
-
-    cout << "Введите значение x (из диапазона [0, +inf)): ";
-    cin >> x;
-
-    cout << "Введите максимальное число итераций: ";
-    cin >> maxIterations;
-
-    cout << "Введите желаемую погрешность (например, 0.0001): ";
-    cin >> tolerance;
-
-    if (x < 0) {
-        cout << "Ошибка: x должен быть неотрицательным." << endl;
-        return 1;
-    }
+    double x = 1;
+    int maxIterations = 10;
+    double tolerance = 2.7*(pow(10,-6));
 
     double result = calculateSeries(x, maxIterations, tolerance);
 
-    cout << fixed << setprecision(10);  // Установка точности вывода
+    cout << fixed << setprecision(10);
     cout << "Значение функционального ряда при x = " << x << " равно: " << result << endl;
 
     return 0;
