@@ -1,0 +1,30 @@
+#include <iostream>
+#include <cmath>
+
+double calculate_sum_39(double input_value, double tolerance = 1e-6, int max_iterations = 1000) {
+    double sum_so_far = 0.0;
+    int iteration_count = 1;
+    double term = 0.0;
+
+    for (iteration_count = 1; iteration_count <= max_iterations; iteration_count++) {
+        term = (pow(input_value, iteration_count)) / (pow(9, iteration_count) * iteration_count);
+        sum_so_far += term;
+
+        if (fabs(term) < tolerance) {
+            break;
+        }
+    }
+
+    if (iteration_count == max_iterations) {
+        std::cout << "Достигнуто максимальное количество итераций (" << max_iterations << ")\n";
+    }
+
+    return sum_so_far;
+}
+
+int main() {
+    double x_value = 4.5;
+    double series_sum = calculate_sum_39(x_value);
+    std::cout << "Сумма ряда для x = " << x_value << " равна: " << series_sum << std::endl;
+    return 0;
+}
