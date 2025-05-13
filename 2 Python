@@ -1,28 +1,52 @@
 import math
 
-def calculate_series(x, max_iterations, tolerance):
-    sum_of_terms = 0.0
-    term = 0.0
-    n = 1
-    while abs(term) > tolerance and n <= max_iterations:
-        term = x / (1.0 + math.pow(n, 4.0) * math.pow(x, 3.0))
-        sum_of_terms += term
+def calculate_series(x, tolerance=1e-6, max_iterations=1000):
+    """
+    Вычисляет сумму степенного ряда:  Σ (от n=0 до ∞) (x+8)^n / ((n+1)*6^n)
+    с заданной точностью.
+
+    Args:
+        x (float): Значение x, для которого вычисляется ряд.
+        tolerance (float): Желаемая точность вычисления (например, 1e-6).
+        max_iterations (int): Максимальное количество итераций для предотвращения бесконечного цикла.
+
+    Returns:
+        float: Приближенное значение суммы ряда.
+    """
+
+    sum_ = 0.0  # Инициализируем сумму
+    n = 0        # Инициализируем счетчик итераций
+    term = 1.0   # Инициализируем первый член ряда (при n=0)
+
+    while abs(term) > tolerance and n < max_iterations:
+        term = (x + 8)**n / ((n + 1) * (6**n))
+        sum_ += term
         n += 1
 
-    if n > max_iterations:
-        print("Достигнуто максимальное число итераций.")
+    if n == max_iterations:
+        print(f"Предупреждение: Достигнуто максимальное число итераций ({max_iterations}).  Точность может быть не достигнута.")
 
-    return sum_of_terms
+    return sum_
 
-def main():
-    x = 1
-    max_iterations = 10
-    tolerance = 2.7 * (10 ** -6)
-
-    result = calculate_series(x, max_iterations, tolerance)
-
-    print(f"{result:.10f}")
-    print(f"Значение функционального ряда при x = {x} равно: {result}")
-
+# Пример использования
 if __name__ == "__main__":
-    main()
+    x_value = float(input("Введите значение x: "))  # Запрашиваем значение x у пользователя
+    tolerance_value = float(input("Введите желаемую точность (например, 1e-6): "))
+    max_iterations_value = int(input("Введите максимальное количество итераций (например, 1000): "))
+    result = calculate_series(x_value, tolerance_value, max_iterations_value)
+    print(f"При x = {x_value}, сумма ряда ≈ {result}")
+
+
+# Дополнительные функции (пока не используемые, но полезные)
+def ratio_test(x):
+    """
+    Применяет признак Д'Аламбера для оценки радиуса сходимости ряда.
+    Этот тест не всегда точно определяет радиус сходимости, но может дать полезную оценку.
+    """
+    limit = abs((x + 8) / 6)
+    if limit < 1:
+        print("Ряд сходится (абсолютно)")
+    elif limit > 1:
+        print("Ряд расходится")
+    else:
+        print("Тест не дает результата")
