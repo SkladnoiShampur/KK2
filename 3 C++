@@ -1,0 +1,40 @@
+#include <iostream>
+#include <cmath>
+#include <limits>
+
+double calculate_sum(double x, double tolerance = 1e-6, int max_iterations = 1000) {
+    double sum_so_far = 0.0;
+    int n = 1;
+    double term = 0.0;
+
+    while (n <= max_iterations) {
+        try {
+            term = std::log(1 + (std::pow(x, n)) * std::exp(-(n * n)));  
+        } catch (const std::overflow_error&) {
+            std::cout << "Достигнуто максимальное количество итераций for n = " << n << std::endl;
+            return sum_so_far;
+        }
+
+        sum_so_far += term;
+
+        if (std::abs(term) < tolerance) {
+            break;  
+        }
+        n += 1;
+    }
+
+    if (n > max_iterations) {
+       std::cout << "Достигнут предел точности (" << max_iterations << ")" << std::endl;
+    }
+
+    return sum_so_far;
+}
+
+int main() {
+    double x_value = 0.5;  
+    double series_sum = calculate_sum(x_value);
+
+    std::cout << "Сумма ряда для x = " << x_value << " равна: " << series_sum << std::endl;
+
+    return 0;
+}
