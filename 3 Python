@@ -1,0 +1,59 @@
+import math
+
+def calculate_sum(x, tolerance=1e-6, max_iterations=1000):
+    """
+    Calculates the sum of the series:
+    sum from n=1 to infinity of ln(1 + x^n * e^(-n^2))
+
+    Args:
+        x (float): The value of x for which to calculate the sum.
+        tolerance (float): The desired accuracy (default: 1e-6).
+        max_iterations (int):  Maximum number of terms to sum to avoid infinite loops (default: 1000)
+
+    Returns:
+        float: The approximate sum of the series.
+    """
+
+    sum_so_far = 0.0
+    n = 1
+    term = 0.0
+
+    while n <= max_iterations:
+        try:
+            term = math.log(1 + (x**n) * math.exp(-(n**2)))  # Corrected the formula
+        except OverflowError:
+            # Handle potential overflow issues (e.g., x is too large)
+            print(f"OverflowError encountered for n = {n}.  Returning partial sum.")
+            return sum_so_far
+
+        sum_so_far += term
+
+        if abs(term) < tolerance:
+            break  # Stop if the term is smaller than the tolerance
+
+        n += 1
+
+    if n > max_iterations:
+       print(f"Reached maximum iterations ({max_iterations}).  Convergence not guaranteed.")
+
+
+    return sum_so_far
+
+
+# Example usage:
+x_value = 0.5  # You can change this value
+series_sum = calculate_sum(x_value)
+
+print(f"The sum of the series for x = {x_value} is approximately: {series_sum}")
+
+# Example for different x values within a reasonable range (where it should converge)
+x_values = [0.1, 0.5, 0.9]
+for x in x_values:
+  series_sum = calculate_sum(x)
+  print(f"The sum of the series for x = {x} is approximately: {series_sum}")
+
+
+#Example checking the edge of the domain (but R means real numbers) so this is OK.
+x = -0.5
+series_sum = calculate_sum(x)
+print(f"The sum of the series for x = {x} is approximately: {series_sum}")
