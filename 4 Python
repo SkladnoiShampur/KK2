@@ -1,0 +1,51 @@
+def calculate_sum_39(x, tolerance=1e-6, max_iterations=1000):
+    """
+    Calculates the sum of the series:
+    sum from n=1 to infinity of x^n / (9^n * n)
+
+    Args:
+        x (float): The value of x for which to calculate the sum.
+        tolerance (float): The desired accuracy (default: 1e-6).
+        max_iterations (int): Maximum number of terms to sum to avoid infinite loops (default: 1000)
+
+    Returns:
+        float: The approximate sum of the series.
+    """
+
+    sum_so_far = 0.0
+    n = 1
+    term = 0.0
+
+    for n in range(1, max_iterations + 1): # Iterate from 1 to max_iterations
+        term = (x**n) / (9**n * n)
+        sum_so_far += term
+
+        if abs(term) < tolerance:
+            break  # Stop if the term is smaller than the tolerance
+
+    if n == max_iterations:
+        print(f"Reached maximum iterations ({max_iterations}).  Convergence not guaranteed.")
+
+    return sum_so_far
+
+
+# Example usage:
+x_value = 4.5  # Example value for x.  The radius of convergence is 9. |x| < 9, therefore -9 < x < 9
+series_sum = calculate_sum_39(x_value)
+print(f"The sum of the series for x = {x_value} is approximately: {series_sum}")
+
+# Examples for different x values within the convergence range
+x_values = [-8, 0, 8]
+for x in x_values:
+  series_sum = calculate_sum_39(x)
+  print(f"The sum of the series for x = {x} is approximately: {series_sum}")
+
+
+#Example checking at the boundary (x = 9 or x = -9, the results will be different)
+x = 9
+series_sum = calculate_sum_39(x)
+print(f"The sum of the series for x = {x} is approximately: {series_sum}")
+
+x = -9
+series_sum = calculate_sum_39(x)
+print(f"The sum of the series for x = {x} is approximately: {series_sum}")
