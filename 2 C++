@@ -1,0 +1,32 @@
+#include <iostream>
+#include <cmath>
+
+double calculate_series(double x, double tolerance = 1e-6, int max_iterations = 1000) {
+    double sum = 0.0;
+    int n = 0;
+    double term = 1.0;
+
+    while (std::abs(term) > tolerance && n < max_iterations) {
+        term = std::pow(x + 8, n) / ((n + 1) * std::pow(6, n));
+        sum += term;
+        n += 1;
+    }
+
+    if (n == max_iterations) {
+        std::cout << "Достигнуто максимальное число итераций (" << max_iterations << ")" << std::endl;
+    }
+
+    return sum;
+}
+
+int main() {
+    double x_value;
+    std::cout << "Введите значение x: ";
+    std::cin >> x_value;
+    double tolerance_value = 1e-6;
+    int max_iterations_value = 100;
+    double result = calculate_series(x_value, tolerance_value, max_iterations_value);
+    std::cout << "При x = " << x_value << ", сумма ряда ≈ " << result << std::endl;
+
+    return 0;
+}
